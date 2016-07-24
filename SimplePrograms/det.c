@@ -53,9 +53,9 @@ int minor(struct array mat, int order, int row, int col){
 }
 
 int cofactor(struct array mat, int row, int col, int order){
-  double dr = row;
-  double dc = col;
-  return ((int)pow((-1), (dr+dc))) * minor(mat, order, row, col);
+  double dr = (double)row;
+  double dc = (double)col;
+  return ((int)(pow((-1), (dr+dc)))) * minor(mat, order, row, col);
 }
 
 

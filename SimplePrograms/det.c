@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <math.h>
 struct array{
   int matrix[3][3];
 };
@@ -23,7 +23,7 @@ int minor(struct array mat, int order, int row, int col){
   struct array2 mat2;
   int i,j,kr = 0,kc=0;
 
-  for ( i = 0,; i < order; i++) {
+  for ( i = 0; i < order; i++) {
     for ( j = 0; j < order; j++) {
         if (i != row) {
           if (j != col) {
@@ -44,22 +44,31 @@ int minor(struct array mat, int order, int row, int col){
 
   for (i = 0; i < 2; i++) {
     for ( j = 0; j < 2; j++) {
-      mat2[i][j];
+      mat2.matrix[i][j];
     }
   }
 
-  return ((mat2[0][0]*mat2[1][1]) - (mat2[0][1]*mat2[1][0]));
+  return ((mat2.matrix[0][0] * mat2.matrix[1][1]) - (mat2.matrix[0][1] * mat2.matrix[1][0]));
 
 }
 
-struct array adjoint(struct array omat, order){
+int cofactor(struct array mat, int row, int col, int order){
+  double dr = row;
+  double dc = col;
+  return ((int)pow((-1), (dr+dc))) * minor(mat, order, row, col);
+}
+
+
+
+struct array adjoint(struct array omat, int order){
   struct array radjmat;
   int i,j,k;
   for ( i = 0; i < order; i++) {
     for ( j = 0; j < order; j++) {
-        radjmat.matrix[i][j] = ;
+        radjmat.matrix[i][j] = cofactor(omat, i, j, order);
     }
   }
+  radjmat = transpose_matrix(radjmat, 3);
 }
 
 
@@ -68,17 +77,15 @@ int determinant(struct array matric, int order){
   int i;
   if (order != 2) {
     for ( i = 0; i < order; i++) {
-      sum = sum + (matric.matrix[0][i] * determinant(minor(i, 0, matric, order)));
+      sum = sum + cofactor(matric, 3, 3, 3);
     }
-    order--;
     return sum;
   }
   else{
-    int mul = (matrix[0][0] * matrix[1][1]) - (matrix[1][0] * matrix[0][1]);
-    return mul;
+    sum = (matric.matrix[0][0] * matric.matrix[1][1]) - (matric.matrix[1][0] * matric.matrix[0][1]);
+    return sum;
     }
   }
-}
 
 
 void  main() {
@@ -104,10 +111,9 @@ void  main() {
     printf("\n");
   }
 
-
-  //determinant of a given matrix
-  printf("determinant of the given matrix is :  %d", detofmatrix);
+//determinant of a given matrix
   detofmatrix = determinant(mat,order);
+  printf("determinant of the given matrix is :  %d", detofmatrix);
 
   //adjoint of the given matrix
   adjmat = adjoint(mat, order);
@@ -126,6 +132,9 @@ void  main() {
       }
       printf("\n");
     }
+  }
+  else{
+    printf("inverse cannot be possible to a matrix with det = 0\n");
   }
 
   for ( i = 0; i < order; i++) {

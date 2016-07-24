@@ -19,15 +19,36 @@ struct array transpose_matrix(struct array matri, int order){
   return tmatrix;
 }
 
-int minor(struct mat, int order, int row, int col){
+int minor(struct array mat, int order, int row, int col){
   struct array2 mat2;
-  int i,j,k;
+  int i,j,kr = 0,kc=0;
 
-  for ( i = 0, k = 0; i < order; i++) {
+  for ( i = 0,; i < order; i++) {
     for ( j = 0; j < order; j++) {
-      scanf("%d",&mat.matrix[i][j]);
+        if (i != row) {
+          if (j != col) {
+          }
+          else{
+            mat2.matrix[kr][kc] = mat.matrix[i][j];
+            if (kc < 2) {
+              kc++;
+            }
+            else{
+              kc = 0;
+              kr++;
+            }
+          }
+        }
     }
   }
+
+  for (i = 0; i < 2; i++) {
+    for ( j = 0; j < 2; j++) {
+      mat2[i][j];
+    }
+  }
+
+  return ((mat2[0][0]*mat2[1][1]) - (mat2[0][1]*mat2[1][0]));
 
 }
 
